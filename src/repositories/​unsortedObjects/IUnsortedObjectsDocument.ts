@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 
 export default interface IUnsortedObjectsDocument extends mongoose.Document {
-  _id: string;
+  id: string;
   object: object;
   keyCount: number;
   depth: number;

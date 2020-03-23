@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
+import sizeof from 'sizeof';
 import { UnsortedObjectsRepository } from '../../repositories/​unsortedObjects';
 import SystemResponse from '../../libs/SystemResponse';
+import getObject from './helper';
 
 class UnsortedObjectsController {
   static instance: UnsortedObjectsController;
@@ -19,8 +21,12 @@ class UnsortedObjectsController {
     console.log('----------Create Object----------');
     try {
       const { rootKeyCount, maxDepth } = req.body;
-      const objectDetails = await UnsortedObjectsRepository.create({ object: { name: 'try' } });
-      SystemResponse.success(res, objectDetails);
+      const object = getObject(rootKeyCount, maxDepth);
+      // const size = sizeof.sizeof(object);
+      const keyCount​ = rootKeyCount;
+      console.log(object);
+      // const objectDetails = await UnsortedObjectsRepository.create({ object, keyCount​, depth, size​, generationTime });
+      SystemResponse.success(res, object);
     }
     catch (err) {
       SystemResponse.failure(res, err, err.message);
