@@ -1,7 +1,7 @@
 import { quickSort, bubbleSort, defaultSort, selectionSort } from './sortingAlgorithm';
 
 const sortObject = (object: object, sortMethod, startTime): object => {
-  let sortedObj = {};
+  const sortedObj = {};
   let keys = Object.keys(object);
   const endTime = new Date().getTime();
   if (endTime - startTime >= 5000)
@@ -24,17 +24,18 @@ const sortObject = (object: object, sortMethod, startTime): object => {
       keys = defaultSort(keys);
   }
 
-
   for (const index in keys) {
-    const key = keys[index];
-    if (typeof object[key] == 'object' && !(object[key] instanceof Array)) {
-      sortedObj[key] = sortObject(object[key], sortMethod, startTime);
-    } else {
-      sortedObj[key] = object[key];
+    if (keys.hasOwnProperty(index)) {
+      const key = keys[index];
+      if (typeof object[key] === 'object' && !(object[key] instanceof Array)) {
+        sortedObj[key] = sortObject(object[key], sortMethod, startTime);
+      } else {
+        sortedObj[key] = object[key];
+      }
     }
   }
 
   return sortedObj;
-}
+};
 
 export default sortObject;
