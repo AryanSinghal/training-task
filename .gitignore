@@ -1,6 +1,7 @@
 #node_modules
 M1/node_modules
 M2/node_modules
+M3/node_modules
 
 #package-lock.json 
 package-lock.json
