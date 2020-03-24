@@ -5,7 +5,6 @@ import { default as validation } from './validation';
 
 const SortStatsRouter: Router = Router();
 SortStatsRouter.route('/')
-    .get(validationHandler(validation.get), controller.list)
-    .post(validationHandler(validation.create), controller.create);
+    .post(validationHandler(validation.create), controller.sortStats);
 
 export default SortStatsRouter;

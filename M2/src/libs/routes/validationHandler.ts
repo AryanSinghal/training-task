@@ -38,15 +38,13 @@ export default (config) => {
             }
           }
         if (config[key].custom !== undefined)
-          if (config[key].custom(reqMethod, req)) {
+          if (config[key].custom(req[reqMethod][key])) {
             const obj = {
               location: `${reqMethod}`,
               msg: `${errorMessage}`,
               param: `${key}`,
               value: `${keyValue}`
             };
-            obj[reqMethod] = obj.param;
-            delete obj.param;
             err.push(obj);
           }
       });
