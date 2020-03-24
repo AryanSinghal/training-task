@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 import { default as IUnsortedObjectsDocument } from './IUnsortedObjectsDocument';
-import { unsortedObjectsModel } from './unsortedObjectsModel';
+import { unsortedObjectsModel } from './UnsortedObjectsModel';
 
 class UnsortedObjectsRepository {
   protected unsortedObjectsModel: mongoose.Model<IUnsortedObjectsDocument>;

@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import sizeof from 'object-sizeof';
+// import sizeof from 'object-sizeof';
 import { UnsortedObjectsRepository } from '../../repositories/​unsortedObjects';
 import SystemResponse from '../../libs/SystemResponse';
 import getObject from './helper';
+const sizeof = require('object-sizeof');
 
 class UnsortedObjectsController {
   static instance: UnsortedObjectsController;
