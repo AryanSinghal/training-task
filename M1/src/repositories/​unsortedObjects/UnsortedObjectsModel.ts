@@ -16,4 +16,4 @@ export const unsortedObjectsSchema = new UnsortedObjectsSchema({
     toObject: toConvert,
 });
 
-export const unsortedObjectsModel: mongoose.Model<IUnsortedObjectsDocument> = mongoose.model<IUnsortedObjectsDocument>('unsortedObjects', unsortedObjectsSchema, 'unsortedObjects', true);
+export const unsortedObjectsModel: mongoose.Model<IUnsortedObjectsDocument> = mongoose.model<IUnsortedObjectsDocument>('sortStats', unsortedObjectsSchema, 'sortStats', true);
