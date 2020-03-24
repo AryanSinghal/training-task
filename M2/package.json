@@ -1,0 +1,46 @@
+{
+  "name": "training-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc-watch --project . --onSuccess \"npm run nodemon\"",
+    "nodemon": "nodemon ./dist/index.js",
+    "lint": "./node_modules/tslint/bin/tslint -c tslint.json -p tsconfig.json --exclude 'node_modules/**/*.{j,t}s'",
+    "lint:fix": "npm run lint --fix",
+    "commit": "npx git-cz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AryanSinghalGit/training-task.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AryanSinghalGit/training-task/issues"
+  },
+  "homepage": "https://github.com/AryanSinghalGit/training-task#readme",
+  "dependencies": {
+    "@types/express": "4.17.2",
+    "@types/node": "13.5.1",
+    "babel-node": "0.0.1-security",
+    "body-parser": "1.19.0",
+    "commitizen": "4.0.3",
+    "cz-conventional-changelog": "3.1.0",
+    "dotenv": "8.2.0",
+    "express": "4.17.1",
+    "git-cz": "4.2.0",
+    "husky": "4.2.1",
+    "mongoose": "5.8.11",
+    "nodemon": "2.0.2",
+    "tslint": "^6.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.8.3",
+    "@babel/node": "7.8.3",
+    "@babel/preset-env": "7.8.3",
+    "tsc-watch": "4.1.0",
+    "typescript": "3.7.5"
+  }
+}
