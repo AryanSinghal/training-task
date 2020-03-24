@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import sizeof from 'sizeof';
+import sizeof from 'object-sizeof';
 import { UnsortedObjectsRepository } from '../../repositories/​unsortedObjects';
 import SystemResponse from '../../libs/SystemResponse';
 import getObject from './helper';
@@ -21,12 +21,17 @@ class UnsortedObjectsController {
     console.log('----------Create Object----------');
     try {
       const { rootKeyCount, maxDepth } = req.body;
+      const start = new Date().getTime();
       const object = getObject(rootKeyCount, maxDepth);
-      // const size = sizeof.sizeof(object);
-      const keyCount​ = rootKeyCount;
-      console.log(object);
-      // const objectDetails = await UnsortedObjectsRepository.create({ object, keyCount​, depth, size​, generationTime });
-      SystemResponse.success(res, object);
+      const end = new Date().getTime();
+      const generationTime = end - start;
+      const size = sizeof(object);
+      const keyCount = rootKeyCount;
+      const depth = maxDepth;
+      const objectDetails = await UnsortedObjectsRepository.create({ object, keyCount, depth, size, generationTime });
+      if (!objectDetails)
+        throw { message: 'Data is not inserted' };
+      SystemResponse.success(res, objectDetails);
     }
     catch (err) {
       SystemResponse.failure(res, err, err.message);
@@ -37,12 +42,12 @@ class UnsortedObjectsController {
   list = async (req: Request, res: Response) => {
     console.log('---------Object List----------');
     try {
-    const objectList = await UnsortedObjectsRepository.list();
-    SystemResponse.success(res, objectList);
-  }
-  catch (err) {
-    SystemResponse.failure(res, err, err.message);
-  }
+      const objectList = await UnsortedObjectsRepository.list();
+      SystemResponse.success(res, objectList);
+    }
+    catch (err) {
+      SystemResponse.failure(res, err, err.message);
+    }
   };
 
 }

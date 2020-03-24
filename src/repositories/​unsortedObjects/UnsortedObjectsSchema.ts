@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 
-export default class SortStatsSchema extends mongoose.Schema {
+export default class UnsortedObjectsSchema extends mongoose.Schema {
   constructor(options) {
     const unsortedObjectsSchema = {
       id: String,

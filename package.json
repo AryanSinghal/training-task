@@ -35,8 +35,8 @@
     "husky": "4.2.1",
     "mongoose": "5.8.11",
     "nodemon": "2.0.2",
-    "sizeof": "^1.0.0",
-    "tslint": "^6.0.0"
+    "object-sizeof": "^1.5.2",
+    "tslint": "6.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.8.3",
