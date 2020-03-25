@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { SortStatsRouter } from './controllers';
+import { dataManagerRouter } from './controller';
 
 const mainRouter: Router = Router();
 
-mainRouter.use('/sort-stats', SortStatsRouter);
+mainRouter.use('/', dataManagerRouter);
 
 export default mainRouter;

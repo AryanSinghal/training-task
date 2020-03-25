@@ -4,7 +4,6 @@ export default (config) => {
   return (req: Request, res: Response, next: NextFunction) => {
     console.log('---------Validation Handler---------');
     console.log(config);
-    console.log(req.body);
     const err = [];
     Object.keys(config).forEach(key => {
       console.log(`---------${key}---------`);
@@ -12,6 +11,7 @@ export default (config) => {
       const { in: reqType } = config[key];
       reqType.forEach(reqMethod => {
         const keyValue = req[reqMethod][key];
+        console.log(keyValue);
         if (config[key].required === true) {
           if (keyValue === undefined || keyValue === null) {
             const obj = {
@@ -36,6 +36,16 @@ export default (config) => {
               };
               err.push(obj);
             }
+          }
+        if (config[key].custom !== undefined)
+          if (config[key].custom(req[reqMethod][key])) {
+            const obj = {
+              location: `${reqMethod}`,
+              msg: `${errorMessage}`,
+              param: `${key}`,
+              value: `${keyValue}`
+            };
+            err.push(obj);
           }
       });
     });

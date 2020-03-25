@@ -9,12 +9,10 @@ class UnsortedObjectsRepository {
   }
 
   public create(data) {
-    console.log('inside repo');
     return this.unsortedObjectsModel.create(data);
   }
 
   public list() {
-    console.log('inside repo');
     return this.unsortedObjectsModel.find({});
   }
 }

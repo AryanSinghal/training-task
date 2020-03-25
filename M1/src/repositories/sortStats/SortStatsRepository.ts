@@ -2,21 +2,19 @@ import * as mongoose from 'mongoose';
 import { default as ISortStatsDocument } from './ISortStatsDocument';
 import { sortStatsModel } from './SortStatsModel';
 
-class UnsortedObjectsRepository {
+class SortStatsRepository {
   protected sortStatsModel: mongoose.Model<ISortStatsDocument>;
   constructor() {
     this.sortStatsModel = sortStatsModel;
   }
 
   public create(data) {
-    console.log('inside repo');
     return this.sortStatsModel.create(data);
   }
 
-  public list() {
-    console.log('inside repo');
-    return this.sortStatsModel.find({});
+  public list(originalId) {
+    return this.sortStatsModel.find({originalId});
   }
 }
 
-export default new UnsortedObjectsRepository();
+export default new SortStatsRepository();

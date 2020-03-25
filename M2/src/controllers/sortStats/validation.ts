@@ -7,10 +7,10 @@ const validation = {
       in: ['body'],
       errorMessage: 'object  is required',
       custom: (key) => {
-        console.log(key);
         if (typeof key !== 'object') {
-          return { error: 'Error Occurred', message: 'Not an Object' };
+          return true;
         }
+        return false;
       }
     },
     sortingAlgorithm: {
@@ -18,13 +18,13 @@ const validation = {
       string: true,
       regex: /^[a-zA-Z]+/,
       in: ['body'],
-      errorMessage: 'object  is required',
+      errorMessage: 'not in quickSort, bubbleSort, selectionSort, defaultSort',
       custom: (key) => {
-        console.log(key);
         const validationArray = ['quickSort', 'bubbleSort', 'selectionSort', 'defaultSort'];
         if (! validationArray.includes(key)) {
-          return { error: 'Error Occurred', message: 'Not an Object' };
+          return true;
         }
+        return false;
       }
     }
 

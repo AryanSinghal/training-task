@@ -15,15 +15,15 @@ class SortStatsController {
     }
   }
 
-  sortStats = async (req: Request, res: Response) => {
+  sortStats = (req: Request, res: Response) => {
     console.log('---------Sort Stats----------');
     try {
-      const { object, sortingAlgorithm, id = 1  } = req.body;
+      const { object, sortingAlgorithm } = req.body;
       const startTime = new Date().getTime();
       sortObject(object, sortingAlgorithm, startTime);
       const endTime = new Date().getTime();
       const sortDuration = endTime - startTime;
-      const responseObject = { objectId: id, sortingAlgorithm, sortDuration }
+      const responseObject = { sortingAlgorithm, sortDuration };
       SystemResponse.success(res, responseObject);
     }
     catch (err) {

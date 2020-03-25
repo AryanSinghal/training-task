@@ -29,6 +29,7 @@ class UnsortedObjectsController {
       const keyCount = rootKeyCount;
       const depth = maxDepth;
       const objectDetails = await UnsortedObjectsRepository.create({ object, keyCount, depth, size, generationTime });
+      console.log('object created inside M1', objectDetails);
       if (!objectDetails)
         throw { message: 'Data is not inserted' };
       SystemResponse.success(res, objectDetails);
