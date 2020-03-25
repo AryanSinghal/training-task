@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
+import { Request, Response, response } from 'express';
 import axios from 'axios';
 import SystemResponse from '../../libs/SystemResponse';
-import { M1_UNSORTED_OBJECTS_API, M2_API } from '../../libs/constant';
+import { M1_UNSORTED_OBJECTS_API, M2_API, M1_SORT_STATS_API } from '../../libs/constant';
 
 class DataMangerController {
   static instance: DataMangerController;
@@ -19,10 +19,9 @@ class DataMangerController {
   createObject = async (req: Request, res: Response) => {
     console.log('---------Create Object----------');
     try {
-      console.log('req>>>>>', req.body);
-      const response = await axios.post(M1_UNSORTED_OBJECTS_API, req.body);
-      console.log('Res inside M3', response.data);
-      SystemResponse.success(res, response.data);
+      const { rootKeyCount, maxDepth } = req.body;
+      const { data } = await axios.post(M1_UNSORTED_OBJECTS_API, { rootKeyCount, maxDepth });
+      SystemResponse.success(res, data);
     }
     catch (err) {
       SystemResponse.failure(res, err, err.message);
@@ -32,8 +31,8 @@ class DataMangerController {
   list = async (req: Request, res: Response) => {
     console.log('---------List Objects----------');
     try {
-      const response = await axios.get(M1_UNSORTED_OBJECTS_API);
-      SystemResponse.success(res, response.data);
+      const { data } = await axios.get(M1_UNSORTED_OBJECTS_API);
+      SystemResponse.success(res, data);
     }
     catch (err) {
       SystemResponse.failure(res, err, err.message);
@@ -44,15 +43,16 @@ class DataMangerController {
     console.log('---------Sort Object----------');
     try {
       const { object, sortingAlgorithm, objectId } = req.body;
-      const response = await axios.post(M2_API, { object, sortingAlgorithm });
-
-      SystemResponse.success(res, 'Success');
+      const responseData = await axios.post(M2_API, { object, sortingAlgorithm });
+      console.log({ objectId, ...responseData.data.data });
+      const { data} = await axios.post(M1_SORT_STATS_API, { objectId, ...responseData.data.data });
+      console.log(data);
+      SystemResponse.success(res, data);
     }
     catch (err) {
       SystemResponse.failure(res, err, err.message);
     }
   };
-
 }
 
 export default DataMangerController.getInstance();
