@@ -15,7 +15,7 @@ class SortStatsController {
     }
   }
 
-  sortStats = async (req: Request, res: Response) => {
+  sortStats = (req: Request, res: Response) => {
     console.log('---------Sort Stats----------');
     try {
       const { object, sortingAlgorithm, id = 1  } = req.body;
