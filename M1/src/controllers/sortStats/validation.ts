@@ -20,19 +20,19 @@ const validation = {
       in: ['body'],
       errorMessage: 'sortDuration is required'
     },
-    originalId:
+    objectId:
     {
       required: true,
       regex: /[\w]+/,
       in: ['body'],
-      errorMessage: 'originalId is required'
+      errorMessage: 'objectId is required'
     }
   },
   get: {
-    originalId: {
+    objectId: {
       required: true,
       regex: /[\w]+/,
-      errorMessage: 'originalId is required',
+      errorMessage: 'objectId is required',
       in: ['query']
     }
   },

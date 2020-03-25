@@ -27,7 +27,6 @@ const validation = {
         return false;
       }
     }
-
   }
 };
 

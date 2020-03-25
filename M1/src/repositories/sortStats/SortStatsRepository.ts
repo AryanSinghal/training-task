@@ -12,8 +12,8 @@ class SortStatsRepository {
     return this.sortStatsModel.create(data);
   }
 
-  public list(originalId) {
-    return this.sortStatsModel.find({originalId});
+  public list(objectId) {
+    return this.sortStatsModel.find({objectId});
   }
 }
 
