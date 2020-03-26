@@ -12,8 +12,9 @@ class UnsortedObjectsRepository {
     return this.unsortedObjectsModel.create(data);
   }
 
-  public list() {
-    return this.unsortedObjectsModel.find({});
+  public list(query, projection, options) {
+    const { skip, limit } = options;
+    return this.unsortedObjectsModel.find(query, projection).skip(Number(skip)).limit(Number(limit));
   }
 }
 

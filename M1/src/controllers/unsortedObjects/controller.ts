@@ -43,7 +43,12 @@ class UnsortedObjectsController {
   list = async (req: Request, res: Response) => {
     console.log('---------Object List----------');
     try {
-      const objectList = await UnsortedObjectsRepository.list();
+      const { skip, limit } = req.query;
+      const query = {};
+      const projection = {};
+      const options = { skip, limit };
+      const objectList = await UnsortedObjectsRepository.list(query, projection, options);
+      console.log(objectList);
       SystemResponse.success(res, objectList);
     }
     catch (err) {

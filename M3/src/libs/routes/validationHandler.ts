@@ -5,6 +5,8 @@ export default (config) => {
     console.log('---------Validation Handler---------');
     console.log(config);
     console.log(req.body);
+    console.log(req.query);
+    console.log(req.params);
     const err = [];
     Object.keys(config).forEach(key => {
       console.log(`---------${key}---------`);
@@ -38,7 +40,7 @@ export default (config) => {
             }
           }
         if (config[key].custom !== undefined)
-          if (config[key].custom(req[reqMethod][key])) {
+          if (config[key].custom(reqMethod, req)) {
             const obj = {
               location: `${reqMethod}`,
               msg: `${errorMessage}`,
