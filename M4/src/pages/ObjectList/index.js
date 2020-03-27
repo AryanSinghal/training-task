@@ -1,1 +1,1 @@
-export { default as ObjectList} from './ObjectList';
+export { default as ObjectList } from './ObjectList';

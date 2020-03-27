@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
+import * as querystring from 'querystring';
 import {
-  Table,
-  TableBody, TableCell, TableContainer,
+  Table, TableBody, TableCell, TableContainer,
   TableHead, TableRow, Paper, Button, Grid, withStyles,
 } from '@material-ui/core';
+import { TABLE_HEAD } from '../../configs/constant';
 
 const styles = () => ({
   buttonHeight: { lineHeight: '2.6' },
@@ -13,106 +14,106 @@ const styles = () => ({
 class ObjectList extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      items: [],
+      skip: 0,
+      limit: 2,
+      count: 2
+    }
   }
 
-  fetchData = async () => {
+  fetchData = async (skip, limit) => {
     try {
+      const { items } = this.state;
       console.log('inside fetch data')
-      const url = 'http://localhost:9003/api/object?skip=0&limit=2';
+      const url = 'http://localhost:9003/api/object' + '?' + querystring.stringify({ skip, limit });
       const response = await fetch(url, {
-        mode: 'no-cors',
+        mode: 'cors',
         method: 'get',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
-        // body: JSON.stringify({
-        //   "rootKeyCount": '2',
-        //   "maxDepth": '3'
-        // }),
       });
-      console.log('resp>>>>>>>>', response);
-      console.log('data>>>>', await response.json())
-    } catch (err) {
-      console.log('inside catch>>>>', err);
+      console.log(response);
+      if(! response.ok){
+        throw { message: ' response.ok is false ' };
+      }
+      const { data } = await response.json();
+      console.log(data.objectData);
+      const item = [...items, ...data.objectData];
+      this.setState({ items: item, skip: (skip + limit), limit, count: data.Count });
+      return data.objectData;
+    }
+    catch (err) {
+      console.log(err.message);
     }
   }
+
+  loadFunc = () => {
+    const { skip, limit } = this.state;
+    this.fetchData(skip, limit);
+  }
+
   render() {
     const { classes } = this.props;
-    console.log(classes);
-
-    const items = [
-      {
-        "_id": "5e7c87773064c25509d38c0d",
-        "keyCount": 2,
-        "depth": 2,
-        "size": 142,
-        "generationTime": 0
-      },
-      {
-        "_id": "5e7c87773064c255",
-        "keyCount": 2,
-        "depth": 2,
-        "size": 1422,
-        "generationTime": 20
-      }
-    ];
-    this.fetchData();
+    const { items, skip, limit, count } = this.state;
+    console.log(skip, limit, count);
     return (
       <>
-        {/* <InfiniteScroll
+        <InfiniteScroll
           pageStart={0}
-          // loadMore={loadFunc}
-          hasMore={true || false}
+          loadMore={this.loadFunc}
+          hasMore={!!(Number(skip) + Number(limit) <= Number(count))}
           loader={<div className="loader">Loading ...</div>}>
-        </InfiniteScroll> */}
-        <TableContainer component={Paper} elevation={3}>
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">Id</TableCell>
-                <TableCell align="center">keyCount</TableCell>
-                <TableCell align="center">depth</TableCell>
-                <TableCell align="center">size</TableCell>
-                <TableCell align="center">generationTime</TableCell>
-                <TableCell align="center">Action</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {
-                items && items.length && items.map((obj) => (
-                  <TableRow key={obj._id}>
-                    {
-                      Object.keys(obj).map((field) => (
-                        <Fragment key={obj._id + field + obj[field]}>
-                          <TableCell align="center">
-                            {obj[field]}
-                          </TableCell>
-                        </Fragment>
-                      ))
-                    }
-                    <Fragment key={obj._id + 'Action'}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                          <Button variant="contained" color="primary" className={classes.buttonHeight} fullWidth>
-                            Sort
-                          </Button>
+          <TableContainer component={Paper} elevation={3}>
+            <Table aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  {
+                    TABLE_HEAD && TABLE_HEAD.length && TABLE_HEAD.map((field) => (
+                      <TableCell align="center"> {field} </TableCell>
+                    ))
+                  }
+                  <TableCell align="center">Action</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {
+                  items && items.length && items.map((obj) => (
+                    <TableRow key={obj.id}>
+                      {
+                        TABLE_HEAD.map((field) => (
+                          <Fragment key={obj.id + field + obj[field]}>
+                            <TableCell align="center">
+                              {obj[field]}
+                            </TableCell>
+                          </Fragment>
+                        ))
+                      }
+                      <Fragment key={obj.id + 'Action'}>
+                        <Grid container spacing={2}>
+                          <Grid item xs={6}>
+                            <Button variant="contained" color="primary" className={classes.buttonHeight} fullWidth>
+                              Sort
+                            </Button>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Button variant="contained" color="primary" className={classes.buttonHeight} fullWidth>
+                              Sort Stats
+                            </Button>
+                          </Grid>
                         </Grid>
-                        <Grid item xs={6}>
-                          <Button variant="contained" color="primary" className={classes.buttonHeight} fullWidth>
-                            Sort Stats
-                          </Button>
-                        </Grid>
-                      </Grid>
-                      <TableCell align="right">
-                      </TableCell>
-                    </Fragment>
-                  </TableRow>
-                ))
-              }
-            </TableBody>
-          </Table>
-        </TableContainer>
+                        <TableCell align="right">
+                        </TableCell>
+                      </Fragment>
+                    </TableRow>
+                  ))
+                }
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </InfiniteScroll>
       </>
     );
   }
