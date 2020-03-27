@@ -45,11 +45,12 @@ class UnsortedObjectsController {
     try {
       const { skip, limit } = req.query;
       const query = {};
-      const projection = {};
+      const projection = { object: 0 };
       const options = { skip, limit };
       const objectList = await UnsortedObjectsRepository.list(query, projection, options);
-      console.log(objectList);
-      SystemResponse.success(res, objectList);
+      const Count = await UnsortedObjectsRepository.count();
+      console.log({...objectList, Count});
+      SystemResponse.success(res, {objectData: objectList, Count});
     }
     catch (err) {
       SystemResponse.failure(res, err, err.message);

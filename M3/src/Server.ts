@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import { notFoundRoute, errorHandler } from './libs/routes';
 import mainRouter from './router';
@@ -39,6 +40,7 @@ export class Server {
 
   public setupRoutes = (): void => {
     const { app }: Server = this;
+    app.use(cors());
     app.get('/health-check', (req: express.Request, res: express.Response) => res.send('I am OK'));
     app.use('/api', mainRouter);
     app.use(notFoundRoute);

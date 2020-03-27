@@ -3,10 +3,10 @@ import SortStatsSchema from './SortStatsSchema';
 import ISortStatsDocument from './ISortStatsDocument';
 
 const toConvert = {
-  transfers: (docs: any, ret: any) => {
+  transform: (docs: any, ret: any) => {
     ret.id = ret._id;
     delete ret._id;
-    delete ret._v;
+    delete ret.__v;
   }
 };
 

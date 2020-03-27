@@ -37,6 +37,7 @@ class DataMangerController {
       const { data } = await axios.get(M1_UNSORTED_OBJECTS_API + '?' + querystring.stringify({ skip, limit }));
       console.log(data);
       SystemResponse.success(res, data.data);
+      res.end();
     }
     catch (err) {
       SystemResponse.failure(res, err, err.message);
