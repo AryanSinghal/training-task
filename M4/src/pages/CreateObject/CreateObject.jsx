@@ -1,5 +1,6 @@
 import React from 'react';
 import { TextField, Grid, Button } from '@material-ui/core';
+import { M3_OBJECT_API } from '../../configs/constant';
 
 class CreateObject extends React.Component {
   constructor(props) {
@@ -45,8 +46,7 @@ class CreateObject extends React.Component {
       event.preventDefault();
       const { count, depth } = this.state;
       console.log(JSON.stringify({ rootKeyCount: Number(count), maxDepth: Number(depth) }));
-      const url = 'http://localhost:9003/api/object';
-      const response = await fetch(url, {
+      const response = await fetch(M3_OBJECT_API, {
         mode: 'cors',
         method: 'POST',
         body: JSON.stringify({ rootKeyCount: Number(count), maxDepth: Number(depth) }),

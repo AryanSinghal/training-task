@@ -2,10 +2,11 @@ import React, { Fragment } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import * as querystring from 'querystring';
 import {
-  Table, TableBody, TableCell, TableContainer,
-  TableHead, TableRow, Paper, Button, Grid, withStyles,
+  Table, TableBody, TableCell, TableContainer, NativeSelect,
+  TableHead, TableRow, Paper, Button, Grid, withStyles, InputLabel,
 } from '@material-ui/core';
-import { TABLE_HEAD } from '../../configs/constant';
+import { TABLE_HEAD, M3_OBJECT_API, M3_SORT_API } from '../../configs/constant';
+import SortStatsDialog from './SortStatsDialog';
 
 const styles = () => ({
   buttonHeight: { lineHeight: '2.6' },
@@ -17,16 +18,61 @@ class ObjectList extends React.Component {
     this.state = {
       items: [],
       skip: 0,
-      limit: 2,
-      count: 2
+      limit: 10,
+      count: 10,
+      open: false
+    }
+  }
+
+  sort = async (objectId) => {
+    const sortingAlgorithm = document.getElementById(objectId + 'sortingAlgorithm').value;
+    console.log(objectId, sortingAlgorithm);
+    try {
+      const response = await fetch(M3_SORT_API, {
+        mode: 'cors',
+        method: 'POST',
+        body: JSON.stringify({ sortingAlgorithm, objectId }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw { message: data }
+      }
+      console.log(data);
+    } catch (error) {
+      console.log(error.message || error);
+    }
+  }
+
+  sortStats = async (objectId) => {
+    const sortingAlgorithm = document.getElementById(objectId + 'sortingAlgorithm').value;
+    console.log(objectId, sortingAlgorithm);
+    try {
+      const response = await fetch(M3_SORT_API, {
+        mode: 'cors',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw { message: data }
+      }
+      console.log(data);
+    } catch (error) {
+      console.log(error.message || error);
     }
   }
 
   fetchData = async (skip, limit) => {
     try {
       const { items } = this.state;
-      console.log('inside fetch data')
-      const url = 'http://localhost:9003/api/object' + '?' + querystring.stringify({ skip, limit });
+      const url = M3_OBJECT_API + '?' + querystring.stringify({ skip, limit });
       const response = await fetch(url, {
         mode: 'cors',
         method: 'get',
@@ -36,7 +82,7 @@ class ObjectList extends React.Component {
         },
       });
       console.log(response);
-      if(! response.ok){
+      if (!response.ok) {
         throw { message: ' response.ok is false ' };
       }
       const { data } = await response.json();
@@ -55,9 +101,19 @@ class ObjectList extends React.Component {
     this.fetchData(skip, limit);
   }
 
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   render() {
     const { classes } = this.props;
-    const { items, skip, limit, count } = this.state;
+    const {
+      items, skip, limit, count, open,
+    } = this.state;
     console.log(skip, limit, count);
     return (
       <>
@@ -80,7 +136,7 @@ class ObjectList extends React.Component {
               </TableHead>
               <TableBody>
                 {
-                  items && items.length && items.map((obj) => (
+                  items.map((obj) => (
                     <TableRow key={obj.id}>
                       {
                         TABLE_HEAD.map((field) => (
@@ -93,15 +149,43 @@ class ObjectList extends React.Component {
                       }
                       <Fragment key={obj.id + 'Action'}>
                         <Grid container spacing={2}>
-                          <Grid item xs={6}>
-                            <Button variant="contained" color="primary" className={classes.buttonHeight} fullWidth>
+                          <Grid item xs={4}>
+                            <InputLabel shrink>
+                              Sorting Algorithm
+                            </InputLabel>
+                            <NativeSelect
+                              id={obj.id + 'sortingAlgorithm'}
+                              name="sortingAlgorithm"
+                            >
+                              <option value="" disabled>Select</option>
+                              <option value="defaultSort">Default Sort</option>
+                              <option value="selectionSort">Selection Sort</option>
+                              <option value="bubbleSort">Bubble Sort</option>
+                              <option value="quickSort">Quick Sort</option>
+                            </NativeSelect>
+                          </Grid>
+                          <Grid item xs={4}>
+                            <Button
+                              variant="contained"
+                              onClick={() => { this.sort(obj.id) }}
+                              color="primary"
+                              className={classes.buttonHeight}
+                              fullWidth
+                            >
                               Sort
                             </Button>
                           </Grid>
-                          <Grid item xs={6}>
-                            <Button variant="contained" color="primary" className={classes.buttonHeight} fullWidth>
+                          <Grid item xs={4}>
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              className={classes.buttonHeight}
+                              onClick={this.handleClickOpen}
+                              fullWidth
+                            >
                               Sort Stats
                             </Button>
+                            <SortStatsDialog open={open} onClose={this.handleClose} />
                           </Grid>
                         </Grid>
                         <TableCell align="right">
