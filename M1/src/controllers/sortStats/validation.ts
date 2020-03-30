@@ -6,9 +6,9 @@ const validation = {
       regex: /^[a-zA-Z]+/,
       in: ['body'],
       errorMessage: 'not in quickSort, bubbleSort, selectionSort, defaultSort',
-      custom: (key) => {
+      custom: (reqMethod, req) => {
         const validationArray = ['quickSort', 'bubbleSort', 'selectionSort', 'defaultSort'];
-        if (!validationArray.includes(key)) {
+        if (!validationArray.includes(req[reqMethod].sortingAlgorithm)) {
           return true;
         }
         return false;
@@ -28,14 +28,72 @@ const validation = {
       errorMessage: 'objectId is required'
     }
   },
-  get: {
+  getStats: {
     objectId: {
       required: true,
       regex: /[\w]+/,
       errorMessage: 'objectId is required',
       in: ['query']
+    },
+    skip:
+    {
+      required: false,
+      default: 0,
+      number: true,
+      regex: /[0-9]+/,
+      in: ['query'],
+      errorMessage: 'Skip is invalid',
+      custom: (reqMethod, req): void => {
+        if (req[reqMethod].skip === undefined) {
+          req[reqMethod].skip = 0;
+        }
+      }
+    },
+    limit:
+    {
+      required: false,
+      default: 10,
+      number: true,
+      regex: /[0-9]+/,
+      in: ['query'],
+      errorMessage: 'Limit is invalid',
+      custom: (reqMethod, req): void => {
+        if (req[reqMethod].limit === undefined) {
+          req[reqMethod].limit = 10;
+        }
+      }
     }
   },
+  getAll: {
+    skip:
+    {
+      required: false,
+      default: 0,
+      number: true,
+      regex: /[0-9]+/,
+      in: ['query'],
+      errorMessage: 'Skip is invalid',
+      custom: (reqMethod, req): void => {
+        if (req[reqMethod].skip === undefined) {
+          req[reqMethod].skip = 0;
+        }
+      }
+    },
+    limit:
+    {
+      required: false,
+      default: 10,
+      number: true,
+      regex: /[0-9]+/,
+      in: ['query'],
+      errorMessage: 'Limit is invalid',
+      custom: (reqMethod, req): void => {
+        if (req[reqMethod].limit === undefined) {
+          req[reqMethod].limit = 10;
+        }
+      }
+    }
+  }
 };
 
 export default validation;

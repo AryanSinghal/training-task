@@ -7,6 +7,7 @@ export default class SortStatsSchema extends mongoose.Schema {
       objectId: String,
       sortDuration: Number,
       sortingAlgorithm: String,
+      createdAt: Date,
     };
     super(unsortedObjectsSchema, options);
   }

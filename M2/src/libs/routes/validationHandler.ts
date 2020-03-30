@@ -16,7 +16,7 @@ export default (config) => {
           if (keyValue === undefined || keyValue === null) {
             const obj = {
               location: `${reqMethod}`,
-              msg: `${errorMessage}`,
+              msg: `${key} is required`,
               param: `${key}`,
               value: `${keyValue}`
             };
@@ -38,7 +38,7 @@ export default (config) => {
             }
           }
         if (config[key].custom !== undefined)
-          if (config[key].custom(req[reqMethod][key])) {
+          if (config[key].custom(reqMethod, req)) {
             const obj = {
               location: `${reqMethod}`,
               msg: `${errorMessage}`,

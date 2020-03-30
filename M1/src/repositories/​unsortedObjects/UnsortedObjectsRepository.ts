@@ -17,6 +17,10 @@ class UnsortedObjectsRepository {
     return this.unsortedObjectsModel.find(query, projection).skip(Number(skip)).limit(Number(limit));
   }
 
+  getObject = (query, projection) => {
+    return this.unsortedObjectsModel.findOne(query, projection);
+  }
+
   count = (query = {}) => {
     return this.unsortedObjectsModel.countDocuments(query);
   }

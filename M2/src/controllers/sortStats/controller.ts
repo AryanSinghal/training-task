@@ -24,6 +24,7 @@ class SortStatsController {
       const endTime = new Date().getTime();
       const sortDuration = endTime - startTime;
       const responseObject = { sortingAlgorithm, sortDuration };
+      console.log(responseObject);
       SystemResponse.success(res, responseObject);
     }
     catch (err) {

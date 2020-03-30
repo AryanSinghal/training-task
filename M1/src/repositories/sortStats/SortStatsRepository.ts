@@ -9,11 +9,16 @@ class SortStatsRepository {
   }
 
   public create(data) {
-    return this.sortStatsModel.create(data);
+    return this.sortStatsModel.create({ ...data, createdAt: Date.now() });
   }
 
-  public list(objectId) {
-    return this.sortStatsModel.find({objectId});
+  public list(query = {}, projection = {}, options) {
+    const { skip, limit } = options;
+    return this.sortStatsModel.find(query, projection).skip(Number(skip)).limit(Number(limit));
+  }
+
+  public count(query = {}) {
+    return this.sortStatsModel.countDocuments(query);
   }
 }
 

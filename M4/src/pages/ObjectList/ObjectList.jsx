@@ -5,7 +5,7 @@ import {
   Table, TableBody, TableCell, TableContainer, NativeSelect,
   TableHead, TableRow, Paper, Button, Grid, withStyles, InputLabel,
 } from '@material-ui/core';
-import { TABLE_HEAD, M3_OBJECT_API, M3_SORT_API } from '../../configs/constant';
+import { OBJECT_COLUMNS, M3_OBJECT_API, M3_SORT_API } from '../../configs/constant';
 import SortStatsDialog from './SortStatsDialog';
 
 const styles = () => ({
@@ -20,7 +20,8 @@ class ObjectList extends React.Component {
       skip: 0,
       limit: 10,
       count: 10,
-      open: false
+      open: false,
+      objectId: 0
     }
   }
 
@@ -101,8 +102,8 @@ class ObjectList extends React.Component {
     this.fetchData(skip, limit);
   }
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
+  handleClickOpen = (objectId) => {
+    this.setState({ open: true, objectId });
   };
 
   handleClose = () => {
@@ -112,7 +113,7 @@ class ObjectList extends React.Component {
   render() {
     const { classes } = this.props;
     const {
-      items, skip, limit, count, open,
+      items, skip, limit, count, open, objectId,
     } = this.state;
     console.log(skip, limit, count);
     return (
@@ -127,8 +128,8 @@ class ObjectList extends React.Component {
               <TableHead>
                 <TableRow>
                   {
-                    TABLE_HEAD && TABLE_HEAD.length && TABLE_HEAD.map((field) => (
-                      <TableCell align="center"> {field} </TableCell>
+                    OBJECT_COLUMNS && OBJECT_COLUMNS.length && OBJECT_COLUMNS.map((column) => (
+                      <TableCell align="center"> {column.label} </TableCell>
                     ))
                   }
                   <TableCell align="center">Action</TableCell>
@@ -139,10 +140,10 @@ class ObjectList extends React.Component {
                   items.map((obj) => (
                     <TableRow key={obj.id}>
                       {
-                        TABLE_HEAD.map((field) => (
-                          <Fragment key={obj.id + field + obj[field]}>
+                        OBJECT_COLUMNS.map((column) => (
+                          <Fragment key={obj.id + column.field + obj[column.field]}>
                             <TableCell align="center">
-                              {obj[field]}
+                              {obj[column.field]}
                             </TableCell>
                           </Fragment>
                         ))
@@ -180,12 +181,12 @@ class ObjectList extends React.Component {
                               variant="contained"
                               color="primary"
                               className={classes.buttonHeight}
-                              onClick={this.handleClickOpen}
+                              onClick={() => { this.handleClickOpen(obj.id) }}
                               fullWidth
                             >
                               Sort Stats
                             </Button>
-                            <SortStatsDialog open={open} onClose={this.handleClose} />
+                            <SortStatsDialog open={open} onClose={this.handleClose} objectId={objectId} />
                           </Grid>
                         </Grid>
                         <TableCell align="right">

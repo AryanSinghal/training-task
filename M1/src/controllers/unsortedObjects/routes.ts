@@ -7,5 +7,7 @@ const unsortedObjectsRouter: Router = Router();
 unsortedObjectsRouter.route('/')
     .get(validationHandler(validation.get), controller.list)
     .post(validationHandler(validation.create), controller.create);
+unsortedObjectsRouter.route('/:id')
+  .get(validationHandler(validation.getObject), controller.getObject);
 
 export default unsortedObjectsRouter;

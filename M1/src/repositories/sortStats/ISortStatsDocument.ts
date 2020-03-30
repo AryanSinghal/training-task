@@ -5,4 +5,5 @@ export default interface ISortStatsDocument extends mongoose.Document {
   objectId: string;
   sortDuration: number;
   sortingAlgorithm: string;
+  createdAt: Date;
 }

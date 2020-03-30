@@ -57,6 +57,22 @@ class UnsortedObjectsController {
     }
   };
 
+  getObject = async (req: Request, res: Response) => {
+    console.log('---------GET OBJECT----------');
+    try {
+      const { id } = req.params;
+      console.log(id);
+      const query = {_id: id};
+      const projection = { object: 1 };
+      const object = await UnsortedObjectsRepository.getObject(query, projection);
+      console.log(object);
+      SystemResponse.success(res, object);
+    }
+    catch (err) {
+      SystemResponse.failure(res, err, err.message);
+    }
+  };
+
 }
 
 export default UnsortedObjectsController.getInstance();

@@ -35,10 +35,33 @@ class SortStatsController {
   list = async (req: Request, res: Response) => {
     console.log('---------Sort Stats List----------');
     try {
-      const { objectId } = req.query;
-      console.log(objectId);
-      const objectList = await sortStatsRepository.list(objectId);
+      const { skip, limit } = req.query;
+      const query = {};
+      const projection = { id: 0 };
+      const options = { skip, limit };
+      const objectList = await sortStatsRepository.list(query, projection, options);
+      if (!objectList)
+        throw { message: 'Object List is ' + objectList };
       SystemResponse.success(res, objectList);
+    }
+    catch (err) {
+      SystemResponse.failure(res, err, err.message);
+    }
+  };
+
+  listStats = async (req: Request, res: Response) => {
+    console.log('---------Sort Stats List For Particular Id----------');
+    try {
+      const { objectId, skip, limit } = req.query;
+      console.log(objectId);
+      const query = { objectId };
+      const projection = { id: 0 };
+      const options = { skip, limit };
+      const objectList = await sortStatsRepository.list(query, projection, options);
+      const count = await sortStatsRepository.count(query);
+      console.log(objectList, count);
+      const sortStats = { list: objectList, count };
+      SystemResponse.success(res, sortStats);
     }
     catch (err) {
       SystemResponse.failure(res, err, err.message);

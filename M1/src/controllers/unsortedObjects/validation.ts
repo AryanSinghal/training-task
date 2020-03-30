@@ -46,6 +46,15 @@ const validation = {
       }
     }
   },
+  getObject: {
+    id: {
+      required: true,
+      string: true,
+      regex: /[\w]+/,
+      errorMessage: 'id is required',
+      in: ['params']
+    }
+  }
 };
 
 export default validation;
