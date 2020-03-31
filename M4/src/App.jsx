@@ -10,6 +10,7 @@ function App() {
       <SortAll />
       <br />
       <br />
+      <br />
       <ObjectList />
     </>
   );

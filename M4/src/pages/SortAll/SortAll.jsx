@@ -10,6 +10,11 @@ const styles = () => ({
 });
 
 class SortAll extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { msg: '' };
+  }
+
   sortAll = async (objectId) => {
     const sortingAlgorithm = document.getElementById('sortingAlgorithm').value;
     console.log(objectId, sortingAlgorithm);
@@ -28,6 +33,7 @@ class SortAll extends React.Component {
         throw new Error(data);
       }
       console.log(data);
+      this.setState({ msg: 'All Objects are sorted.......' });
     } catch (error) {
       console.log(error.message || error);
     }
@@ -35,6 +41,7 @@ class SortAll extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { msg } = this.state;
     console.log(this.state);
     return (
       <>
@@ -65,11 +72,12 @@ class SortAll extends React.Component {
             >
               Sort All
             </Button>
+            <br />
+            <h3>{msg}</h3>
           </Grid>
           <Grid item xs={4}>
             <Button
               variant="contained"
-              onClick={this.sort}
               color="primary"
               className={classes.buttonHeight}
               fullWidth

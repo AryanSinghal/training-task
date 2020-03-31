@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import {
   Dialog, DialogContent, DialogContentText, DialogTitle, Grid,
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
@@ -118,5 +119,11 @@ class SortStatsDialog extends React.Component {
     );
   }
 }
+
+TextField.propTypes = {
+  open: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  objectId: PropTypes.func.isRequired
+};
 
 export default SortStatsDialog;
