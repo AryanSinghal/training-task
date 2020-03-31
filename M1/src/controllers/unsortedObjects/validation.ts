@@ -54,7 +54,8 @@ const validation = {
       errorMessage: 'id is required',
       in: ['params']
     }
-  }
+  },
+  getAllObject: {}
 };
 
 export default validation;

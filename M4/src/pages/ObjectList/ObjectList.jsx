@@ -5,7 +5,9 @@ import {
   Table, TableBody, TableCell, TableContainer, NativeSelect,
   TableHead, TableRow, Paper, Button, Grid, withStyles, InputLabel,
 } from '@material-ui/core';
-import { OBJECT_COLUMNS, M3_OBJECT_API, M3_SORT_API } from '../../configs/constant';
+import {
+  OBJECT_COLUMNS, M3_OBJECT_API, M3_SORT_API, SKIP, LIMIT, DIALOG_LIMIT, DIALOG_SKIP, COUNT, DIALOG_COUNT
+} from '../../configs/constant';
 import SortStatsDialog from './SortStatsDialog';
 
 const styles = () => ({
@@ -17,9 +19,12 @@ class ObjectList extends React.Component {
     super(props);
     this.state = {
       items: [],
-      skip: 0,
-      limit: 10,
-      count: 10,
+      skip: SKIP,
+      limit: LIMIT,
+      count: COUNT,
+      dialogSkip: DIALOG_SKIP,
+      dialogLimit: DIALOG_LIMIT,
+      dialogCount: DIALOG_COUNT,
       open: false,
       objectId: 0
     }
@@ -107,15 +112,17 @@ class ObjectList extends React.Component {
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({
+      open: false, objectId: 0, dialogSkip: DIALOG_SKIP, dialogLimit: DIALOG_LIMIT, dialogCount: DIALOG_COUNT,
+    });
   };
 
   render() {
     const { classes } = this.props;
     const {
-      items, skip, limit, count, open, objectId,
+      items, skip, limit, count, open, objectId, dialogSkip, dialogCount, dialogLimit,
     } = this.state;
-    console.log(skip, limit, count);
+    console.log(this.state);
     return (
       <>
         <InfiniteScroll
@@ -129,7 +136,9 @@ class ObjectList extends React.Component {
                 <TableRow>
                   {
                     OBJECT_COLUMNS && OBJECT_COLUMNS.length && OBJECT_COLUMNS.map((column) => (
-                      <TableCell align="center"> {column.label} </TableCell>
+                      <Fragment key={column.field}>
+                        <TableCell align="center"> {column.label} </TableCell>
+                      </Fragment>
                     ))
                   }
                   <TableCell align="center">Action</TableCell>
@@ -186,7 +195,11 @@ class ObjectList extends React.Component {
                             >
                               Sort Stats
                             </Button>
-                            <SortStatsDialog open={open} onClose={this.handleClose} objectId={objectId} />
+                            <SortStatsDialog
+                              open={open}
+                              onClose={this.handleClose}
+                              objectId={objectId}
+                            />
                           </Grid>
                         </Grid>
                         <TableCell align="right">

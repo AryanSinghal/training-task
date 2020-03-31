@@ -32,6 +32,27 @@ class SortStatsController {
     }
   };
 
+  sortAll = (req: Request, res: Response) => {
+    console.log('---------Sort All Stats----------');
+    let responseObject = [];
+    try {
+      const { object, sortingAlgorithm } = req.body;
+      Object.keys(object).map((index) => {
+        console.log(object[index].id);
+        const startTime = new Date().getTime();
+        sortObject(object[index].object, sortingAlgorithm, startTime);
+        const endTime = new Date().getTime();
+        const sortDuration = endTime - startTime;
+        responseObject = [{ objectId: object[index].id, sortingAlgorithm, sortDuration }, ...responseObject];
+      });
+      console.log(responseObject);
+      SystemResponse.success(res, responseObject);
+    }
+    catch (err) {
+      SystemResponse.failure(res, err, err.message);
+    }
+  };
+
 }
 
 export default SortStatsController.getInstance();

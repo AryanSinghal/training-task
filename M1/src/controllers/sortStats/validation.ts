@@ -93,6 +93,20 @@ const validation = {
         }
       }
     }
+  },
+  insertAll: {
+    data: {
+      required: true,
+      object: true,
+      in: ['body'],
+      errorMessage: 'should be array',
+      custom: (reqMethod, req) => {
+        if (!Array.isArray(req[reqMethod].data)) {
+          return true;
+        }
+        return false;
+      }
+    }
   }
 };
 

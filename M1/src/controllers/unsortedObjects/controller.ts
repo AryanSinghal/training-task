@@ -49,8 +49,8 @@ class UnsortedObjectsController {
       const options = { skip, limit };
       const objectList = await UnsortedObjectsRepository.list(query, projection, options);
       const Count = await UnsortedObjectsRepository.count();
-      console.log({...objectList, Count});
-      SystemResponse.success(res, {objectData: objectList, Count});
+      console.log({ ...objectList, Count });
+      SystemResponse.success(res, { objectData: objectList, Count });
     }
     catch (err) {
       SystemResponse.failure(res, err, err.message);
@@ -62,9 +62,24 @@ class UnsortedObjectsController {
     try {
       const { id } = req.params;
       console.log(id);
-      const query = {_id: id};
+      const query = { _id: id };
       const projection = { object: 1 };
       const object = await UnsortedObjectsRepository.getObject(query, projection);
+      console.log(object);
+      SystemResponse.success(res, object);
+    }
+    catch (err) {
+      SystemResponse.failure(res, err, err.message);
+    }
+  };
+
+  getAllObject = async (req: Request, res: Response) => {
+    console.log('---------GET ALL OBJECT----------');
+    try {
+      const query = {};
+      const projection = {};
+      const limit = await UnsortedObjectsRepository.count();
+      const object = await UnsortedObjectsRepository.list(query, projection, { skip: 0, limit });
       console.log(object);
       SystemResponse.success(res, object);
     }

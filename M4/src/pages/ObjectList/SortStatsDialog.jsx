@@ -6,23 +6,25 @@ import {
 import CloseSharpIcon from '@material-ui/icons/CloseSharp';
 import InfiniteScroll from 'react-infinite-scroller';
 import * as querystring from 'querystring';
-import { M3_SORT_API, SORT_COLUMNS } from '../../configs/constant';
+import { M3_SORT_API, SORT_COLUMNS, DIALOG_COUNT, DIALOG_SKIP } from '../../configs/constant';
 
 class SortStatsDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      skip: 0,
-      limit: 10,
-      count: 10,
-      items: []
+      items: [], count: 10, skip: 0, limit: 10, id: 0,
     }
   }
 
   getSortStats = async () => {
     try {
       const { objectId } = this.props;
-      const { skip, limit, items } = this.state;
+      const { limit, id } = this.state;
+      let { skip, items } = this.state;
+      if (id !== objectId) {
+        items = [];
+        skip = DIALOG_SKIP;
+      }
       const url = M3_SORT_API + '?' + querystring.stringify({ skip, limit, objectId });
       const response = await fetch(url, {
         mode: 'cors',
@@ -32,14 +34,12 @@ class SortStatsDialog extends React.Component {
           'Content-Type': 'application/json',
         },
       });
-      console.log(response);
       if (!response.ok) {
         throw { message: ' response.ok is false ' };
       }
       const { data } = await response.json();
-      console.log(data.list, data);
       const item = [...items, ...data.list];
-      this.setState({ items: item, skip: (skip + limit), limit, count: data.count });
+      this.setState({ items: item, skip: (skip + limit), count: data.count, id: objectId })
       return data;
     }
     catch (err) {
@@ -49,18 +49,24 @@ class SortStatsDialog extends React.Component {
 
   render() {
     const { open, onClose, objectId } = this.props;
-    const { count, skip, limit, items } = this.state;
+    const { id } = this.state;
+    let { count, skip, limit, items } = this.state;
+    if (id !== objectId) {
+      items = [];
+      skip = DIALOG_SKIP;
+      count = DIALOG_COUNT;
+    }
     return (
-      <Dialog fullWidth open={open} onClose={onClose} maxWidth="md">
-        <DialogTitle id="form-dialog-title" onClose={onClose}>
+      <Dialog fullWidth open={open} onClose={onClose} maxWidth="md" >
+        <DialogTitle id="form-dialog-title" onClick={onClose}>
           <Grid container>
-          <Grid item xs={6}>
+            <Grid item xs={6}>
               Sort Stats
             </Grid>
             <Grid item xs={6}>
-            <div align="right">
-              <CloseSharpIcon onClick={onClose} />
-            </div>
+              <div align="right">
+                <CloseSharpIcon onClick={onClose} />
+              </div>
             </Grid>
           </Grid>
         </DialogTitle>
@@ -104,13 +110,8 @@ class SortStatsDialog extends React.Component {
                 </TableBody>
               </Table>
             </TableContainer>
-
           </InfiniteScroll>
-
         </DialogContent>
-        <DialogActions>
-
-        </DialogActions>
       </Dialog>
     );
   }

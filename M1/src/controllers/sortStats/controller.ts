@@ -29,7 +29,6 @@ class SortStatsController {
     catch (err) {
       SystemResponse.failure(res, err, err.message);
     }
-
   };
 
   list = async (req: Request, res: Response) => {
@@ -62,6 +61,22 @@ class SortStatsController {
       console.log(objectList, count);
       const sortStats = { list: objectList, count };
       SystemResponse.success(res, sortStats);
+    }
+    catch (err) {
+      SystemResponse.failure(res, err, err.message);
+    }
+  };
+
+  insertAll = async (req, res: Response) => {
+    console.log('----------Insert Sort Stats----------');
+    try {
+      const { data } = req.body;
+      console.log(data);
+      data.forEach(async (item) => {
+        const sortDetails = await sortStatsRepository.create(item);
+        console.log('object created inside M1', sortDetails);
+      });
+      SystemResponse.success(res, 'Data successfully inserted');
     }
     catch (err) {
       SystemResponse.failure(res, err, err.message);

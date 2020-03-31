@@ -9,6 +9,7 @@ sortStatsRouter.route('/')
   .post(validationHandler(validation.insert), controller.insert);
 
 sortStatsRouter.route('/list')
-.get(validationHandler(validation.getStats), controller.listStats);
+  .get(validationHandler(validation.getStats), controller.listStats)
+  .post(validationHandler(validation.insertAll), controller.insertAll);
 
 export default sortStatsRouter;

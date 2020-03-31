@@ -10,7 +10,10 @@ dataManagerRouter.route('/object')
   .post(validationHandler(validation.createObject), controller.createObject);
 
 dataManagerRouter.route('/sort')
-  .get(validationHandler(validation.listSortStats ), controller.listSortStats )
+  .get(validationHandler(validation.listSortStats), controller.listSortStats)
   .post(validationHandler(validation.sortObject), controller.sortObject);
+
+dataManagerRouter.route('/sort-all')
+  .post(validationHandler(validation.sortAllObject), controller.sortAllObject);
 
 export default dataManagerRouter;

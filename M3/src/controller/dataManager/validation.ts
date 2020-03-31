@@ -103,6 +103,22 @@ const validation = {
       }
     }
   },
+  sortAllObject: {
+    sortingAlgorithm: {
+      required: true,
+      string: true,
+      regex: /^[a-zA-Z]+/,
+      in: ['body'],
+      errorMessage: 'not in quickSort, bubbleSort, selectionSort, defaultSort',
+      custom: (reqMethod, req) => {
+        const validationArray = ['quickSort', 'bubbleSort', 'selectionSort', 'defaultSort'];
+        if (!validationArray.includes(req[reqMethod].sortingAlgorithm)) {
+          return true;
+        }
+        return false;
+      }
+    }
+  }
 };
 
 export default validation;
