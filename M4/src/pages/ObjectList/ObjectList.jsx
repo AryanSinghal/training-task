@@ -23,7 +23,7 @@ class ObjectList extends React.Component {
       limit: LIMIT,
       count: COUNT,
       open: false,
-      objectId: 0
+      objectId: '0'
     }
   }
 
@@ -93,7 +93,6 @@ class ObjectList extends React.Component {
         throw new Error('response is not');
       }
       const { data } = await response.json();
-      console.log(data.objectData);
       const item = [...items, ...data.objectData];
       this.setState({ items: item, skip: (skip + limit), limit, count: data.Count });
       return data.objectData;
@@ -113,7 +112,7 @@ class ObjectList extends React.Component {
   };
 
   handleClose = () => {
-    this.setState({ open: false, objectId: 0 });
+    this.setState({ open: false, objectId: '0' });
   };
 
   render() {

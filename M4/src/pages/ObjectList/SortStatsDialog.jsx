@@ -121,9 +121,9 @@ class SortStatsDialog extends React.Component {
 }
 
 SortStatsDialog.propTypes = {
-  open: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  objectId: PropTypes.func.isRequired
+  objectId: PropTypes.string.isRequired
 };
 
 export default SortStatsDialog;
