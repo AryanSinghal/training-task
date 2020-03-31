@@ -120,7 +120,7 @@ class SortStatsDialog extends React.Component {
   }
 }
 
-TextField.propTypes = {
+SortStatsDialog.propTypes = {
   open: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   objectId: PropTypes.func.isRequired
