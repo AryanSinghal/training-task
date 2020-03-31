@@ -43,10 +43,6 @@ export const SORT_COLUMNS = [
   {
     field: 'createdAt',
     label: 'Created At',
-  },
-  {
-    field: 'objectId',
-    label: 'Object Id',
   }
 ];
 export const SKIP = 0;
