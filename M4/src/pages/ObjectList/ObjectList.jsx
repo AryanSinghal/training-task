@@ -127,7 +127,7 @@ class ObjectList extends React.Component {
           pageStart={0}
           loadMore={this.loadFunc}
           hasMore={!!(Number(skip) + Number(limit) <= Number(count))}
-          loader={<div className="loader">Loading ...</div>}>
+          loader={<div key="loader">Loading ...</div>}>
           <TableContainer component={Paper} elevation={3}>
             <Table aria-label="simple table">
               <TableHead>
@@ -150,58 +150,57 @@ class ObjectList extends React.Component {
                         OBJECT_COLUMNS.map((column) => (
                           <Fragment key={obj.id + column.field + obj[column.field]}>
                             <TableCell id={obj.id + column.field} align="center">
-                              {obj[column.field]}
-                              {(obj[column.field] === undefined) ? 'NA' : ''}
+                              {(obj[column.field] !== undefined) ? obj[column.field] : 'NA'}
                             </TableCell>
                           </Fragment>
                         ))
                       }
                       <Fragment key={obj.id + 'Action'}>
-                        <Grid container spacing={2}>
-                          <Grid item xs={4}>
-                            <InputLabel shrink>
-                              Sorting Algorithm
+                        <TableCell>
+                          <Grid container spacing={2}>
+                            <Grid item xs={4}>
+                              <InputLabel shrink>
+                                Sorting Algorithm
                             </InputLabel>
-                            <NativeSelect
-                              id={obj.id + 'sortingAlgorithm'}
-                              name="sortingAlgorithm"
-                            >
-                              <option value="" disabled>Select</option>
-                              <option value="defaultSort">Default Sort</option>
-                              <option value="selectionSort">Selection Sort</option>
-                              <option value="bubbleSort">Bubble Sort</option>
-                              <option value="quickSort">Quick Sort</option>
-                            </NativeSelect>
-                          </Grid>
-                          <Grid item xs={4}>
-                            <Button
-                              variant="contained"
-                              onClick={() => { this.sort(obj.id, index) }}
-                              color="primary"
-                              className={classes.buttonHeight}
-                              fullWidth
-                            >
-                              Sort
+                              <NativeSelect
+                                id={obj.id + 'sortingAlgorithm'}
+                                name="sortingAlgorithm"
+                              >
+                                <option value="" disabled>Select</option>
+                                <option value="defaultSort">Default Sort</option>
+                                <option value="selectionSort">Selection Sort</option>
+                                <option value="bubbleSort">Bubble Sort</option>
+                                <option value="quickSort">Quick Sort</option>
+                              </NativeSelect>
+                            </Grid>
+                            <Grid item xs={4}>
+                              <Button
+                                variant="contained"
+                                onClick={() => { this.sort(obj.id, index) }}
+                                color="primary"
+                                className={classes.buttonHeight}
+                                fullWidth
+                              >
+                                Sort
                             </Button>
-                          </Grid>
-                          <Grid item xs={4}>
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              className={classes.buttonHeight}
-                              onClick={() => { this.handleClickOpen(obj.id) }}
-                              fullWidth
-                            >
-                              Sort Stats
+                            </Grid>
+                            <Grid item xs={4}>
+                              <Button
+                                variant="contained"
+                                color="primary"
+                                className={classes.buttonHeight}
+                                onClick={() => { this.handleClickOpen(obj.id) }}
+                                fullWidth
+                              >
+                                Sort Stats
                             </Button>
-                            <SortStatsDialog
-                              open={open}
-                              onClose={this.handleClose}
-                              objectId={objectId}
-                            />
+                              <SortStatsDialog
+                                open={open}
+                                onClose={this.handleClose}
+                                objectId={objectId}
+                              />
+                            </Grid>
                           </Grid>
-                        </Grid>
-                        <TableCell align="right">
                         </TableCell>
                       </Fragment>
                     </TableRow>

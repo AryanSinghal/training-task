@@ -54,7 +54,7 @@ class SortStatsController {
       const { objectId, skip, limit } = req.query;
       console.log(objectId);
       const query = { objectId };
-      const projection = { id: 0 };
+      const projection = {};
       const options = { skip, limit };
       const objectList = await sortStatsRepository.list(query, projection, options);
       const count = await sortStatsRepository.count(query);
