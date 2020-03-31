@@ -6,7 +6,7 @@ import {
   TableHead, TableRow, Paper, Button, Grid, withStyles, InputLabel,
 } from '@material-ui/core';
 import {
-  OBJECT_COLUMNS, M3_OBJECT_API, M3_SORT_API, SKIP, LIMIT, DIALOG_LIMIT, DIALOG_SKIP, COUNT, DIALOG_COUNT
+  OBJECT_COLUMNS, M3_OBJECT_API, M3_SORT_API, SKIP, LIMIT, COUNT,
 } from '../../configs/constant';
 import SortStatsDialog from './SortStatsDialog';
 
@@ -22,9 +22,6 @@ class ObjectList extends React.Component {
       skip: SKIP,
       limit: LIMIT,
       count: COUNT,
-      dialogSkip: DIALOG_SKIP,
-      dialogLimit: DIALOG_LIMIT,
-      dialogCount: DIALOG_COUNT,
       open: false,
       objectId: 0
     }
@@ -112,15 +109,13 @@ class ObjectList extends React.Component {
   };
 
   handleClose = () => {
-    this.setState({
-      open: false, objectId: 0, dialogSkip: DIALOG_SKIP, dialogLimit: DIALOG_LIMIT, dialogCount: DIALOG_COUNT,
-    });
+    this.setState({ open: false, objectId: 0 });
   };
 
   render() {
     const { classes } = this.props;
     const {
-      items, skip, limit, count, open, objectId, dialogSkip, dialogCount, dialogLimit,
+      items, skip, limit, count, open, objectId,
     } = this.state;
     console.log(this.state);
     return (

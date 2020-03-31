@@ -86,7 +86,9 @@ class SortStatsDialog extends React.Component {
                   <TableRow>
                     {
                       SORT_COLUMNS && SORT_COLUMNS.length && SORT_COLUMNS.map((column) => (
-                        <TableCell align="center"> {column.label || column.field} </TableCell>
+                        <Fragment key={column.field}>
+                          <TableCell align="center"> {column.label || column.field} </TableCell>
+                        </Fragment>
                       ))
                     }
                   </TableRow>

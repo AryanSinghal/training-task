@@ -1,14 +1,8 @@
 import React, { Fragment } from 'react';
-import InfiniteScroll from 'react-infinite-scroller';
-import * as querystring from 'querystring';
 import {
-  Table, TableBody, TableCell, TableContainer, NativeSelect,
-  TableHead, TableRow, Paper, Button, Grid, withStyles, InputLabel,
+  Button, Grid, withStyles, InputLabel,
 } from '@material-ui/core';
-import {
-  M3_SORT_ALL_API, SKIP, LIMIT, DIALOG_LIMIT, DIALOG_SKIP, COUNT, DIALOG_COUNT
-} from '../../configs/constant';
-
+import { M3_SORT_ALL_API } from '../../configs/constant';
 
 const styles = () => ({
   buttonHeight: { lineHeight: '2.6' },
@@ -17,17 +11,6 @@ const styles = () => ({
 class SortAll extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      items: [],
-      skip: SKIP,
-      limit: LIMIT,
-      count: COUNT,
-      dialogSkip: DIALOG_SKIP,
-      dialogLimit: DIALOG_LIMIT,
-      dialogCount: DIALOG_COUNT,
-      open: false,
-      objectId: 0
-    }
   }
 
   sortAll = async (objectId) => {
@@ -59,13 +42,14 @@ class SortAll extends React.Component {
     return (
       <>
         <Grid container spacing={2}>
-          <Grid item={4}>
+          <Grid item xs={4}>
             <InputLabel shrink>
               Sorting Algorithm
             </InputLabel>
             <NativeSelect
               id="sortingAlgorithm"
               name="sortingAlgorithm"
+              fullWidth
             >
               <option value="" disabled>Select</option>
               <option value="defaultSort">Default Sort</option>
@@ -74,7 +58,7 @@ class SortAll extends React.Component {
               <option value="quickSort">Quick Sort</option>
             </NativeSelect>
           </Grid>
-          <Grid item={4}>
+          <Grid item xs={4}>
             <Button
               variant="contained"
               onClick={this.sortAll}
@@ -85,7 +69,7 @@ class SortAll extends React.Component {
               Sort All
             </Button>
           </Grid>
-          <Grid item={4}>
+          <Grid item xs={4}>
             <Button
               variant="contained"
               onClick={this.sort}
