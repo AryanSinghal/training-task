@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import {
   Button, Grid, withStyles, InputLabel, NativeSelect,
 } from '@material-ui/core';
@@ -10,10 +10,6 @@ const styles = () => ({
 });
 
 class SortAll extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   sortAll = async (objectId) => {
     const sortingAlgorithm = document.getElementById('sortingAlgorithm').value;
     console.log(objectId, sortingAlgorithm);
@@ -29,7 +25,7 @@ class SortAll extends React.Component {
       });
       const data = await response.json();
       if (!response.ok) {
-        throw { message: data }
+        throw new Error(data);
       }
       console.log(data);
     } catch (error) {

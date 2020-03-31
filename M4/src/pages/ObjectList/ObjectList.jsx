@@ -27,7 +27,8 @@ class ObjectList extends React.Component {
     }
   }
 
-  sort = async (objectId) => {
+  sort = async (objectId, index) => {
+    const { items } = this.state;
     const sortingAlgorithm = document.getElementById(objectId + 'sortingAlgorithm').value;
     console.log(objectId, sortingAlgorithm);
     try {
@@ -42,9 +43,12 @@ class ObjectList extends React.Component {
       });
       const data = await response.json();
       if (!response.ok) {
-        throw { message: data }
+        throw new Error(data);
       }
-      console.log(data);
+      const item = items[index];
+      item.sortDuration = data.data.sortDuration;
+      items[index] = item;
+      this.setState({ items: [...items] });
     } catch (error) {
       console.log(error.message || error);
     }
@@ -64,7 +68,7 @@ class ObjectList extends React.Component {
       });
       const data = await response.json();
       if (!response.ok) {
-        throw { message: data }
+        throw new Error(data);
       }
       console.log(data);
     } catch (error) {
@@ -86,7 +90,7 @@ class ObjectList extends React.Component {
       });
       console.log(response);
       if (!response.ok) {
-        throw { message: ' response.ok is false ' };
+        throw new Error('response is not');
       }
       const { data } = await response.json();
       console.log(data.objectData);
@@ -141,13 +145,14 @@ class ObjectList extends React.Component {
               </TableHead>
               <TableBody>
                 {
-                  items.map((obj) => (
+                  items.map((obj, index) => (
                     <TableRow key={obj.id}>
                       {
                         OBJECT_COLUMNS.map((column) => (
                           <Fragment key={obj.id + column.field + obj[column.field]}>
-                            <TableCell align="center">
+                            <TableCell id={obj.id + column.field} align="center">
                               {obj[column.field]}
+                              {(obj[column.field] === undefined) ? 'NA' : ''}
                             </TableCell>
                           </Fragment>
                         ))
@@ -172,7 +177,7 @@ class ObjectList extends React.Component {
                           <Grid item xs={4}>
                             <Button
                               variant="contained"
-                              onClick={() => { this.sort(obj.id) }}
+                              onClick={() => { this.sort(obj.id, index) }}
                               color="primary"
                               className={classes.buttonHeight}
                               fullWidth

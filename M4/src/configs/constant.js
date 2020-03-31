@@ -21,6 +21,10 @@ export const OBJECT_COLUMNS = [
   {
     field: 'generationTime',
     label: 'Generation Time',
+  },
+  {
+    field: 'sortDuration',
+    label: 'sort Duration',
   }
 ];
 export const SORT_COLUMNS = [

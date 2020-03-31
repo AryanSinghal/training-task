@@ -57,7 +57,7 @@ class CreateObject extends React.Component {
       });
       const data = await response.json();
       if (!response.ok) {
-        throw { message: data }
+        throw new Error(data);
       }
       this.setState({ submitted: 'Object is generated.........', count: '', depth: '' });
       console.log(data);

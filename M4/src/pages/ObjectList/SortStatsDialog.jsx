@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import {
-  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid,
+  Dialog, DialogContent, DialogContentText, DialogTitle, Grid,
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
 } from '@material-ui/core';
 import CloseSharpIcon from '@material-ui/icons/CloseSharp';
@@ -35,7 +35,7 @@ class SortStatsDialog extends React.Component {
         },
       });
       if (!response.ok) {
-        throw { message: ' response.ok is false ' };
+        throw new Error('response.ok is false');
       }
       const { data } = await response.json();
       const item = [...items, ...data.list];
