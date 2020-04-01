@@ -14,9 +14,9 @@ const styles = () => ({
   buttonHeight: { lineHeight: '2.6' },
   heading: { fontWeight: 'bold', backgroundColor: '#3f51b5', color: 'white' },
   table: {
-    '&:hover': { backgroundColor: '#AAAAAA' },
     '&:nth-child(even)': { backgroundColor: '#F2F2F2' },
     '&:nth-child(odd)': { backgroundColor: '#FFFFFF' },
+    '&:hover': { backgroundColor: '#DDDDDD' },
   },
 });
 
@@ -135,7 +135,7 @@ class ObjectList extends React.Component {
           hasMore={!!(Number(skip) + Number(limit) <= Number(count))}
           loader={<div key="loader">Loading ...</div>}>
           <TableContainer component={Paper} elevation={3}>
-            <Table aria-label="simple table" className={classes.table}>
+            <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
                   {
@@ -151,7 +151,7 @@ class ObjectList extends React.Component {
               <TableBody>
                 {
                   items.map((obj, index) => (
-                    <TableRow key={obj.id} hover={true}>
+                    <TableRow key={obj.id} className={classes.table}>
                       {
                         OBJECT_COLUMNS.map((column) => (
                           <Fragment key={obj.id + column.field + obj[column.field]}>
