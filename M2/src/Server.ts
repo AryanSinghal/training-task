@@ -33,7 +33,7 @@ export class Server {
 
   public initBodyParser = () => {
     const { app } = this;
-    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.urlencoded({ extended: false, limit: '5mb'}));
     app.use(bodyParser.json());
   }
 
