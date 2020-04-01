@@ -10,7 +10,6 @@ class CreateObject extends React.Component {
       depth: 0,
       depthError: '',
       countError: '',
-      submitted: ''
     };
   }
 
@@ -59,7 +58,7 @@ class CreateObject extends React.Component {
       if (!response.ok) {
         throw new Error(data);
       }
-      this.setState({ submitted: 'Object is generated.........', count: '', depth: '' });
+      window.location.reload();
       console.log(data);
     } catch (error) {
       console.log(error.message || error);
@@ -114,7 +113,6 @@ class CreateObject extends React.Component {
             </Button>
           </Grid>
         </Grid>
-        <h3 align="right">{submitted}</h3>
       </form>
     );
   }
