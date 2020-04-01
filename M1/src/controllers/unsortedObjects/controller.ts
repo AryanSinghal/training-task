@@ -76,10 +76,7 @@ class UnsortedObjectsController {
   getAllObject = async (req: Request, res: Response) => {
     console.log('---------GET ALL OBJECT----------');
     try {
-      const query = {};
-      const projection = {};
-      const limit = await UnsortedObjectsRepository.count();
-      const object = await UnsortedObjectsRepository.list(query, projection, { skip: 0, limit });
+      const object = await UnsortedObjectsRepository.list();
       console.log(object);
       SystemResponse.success(res, object);
     }

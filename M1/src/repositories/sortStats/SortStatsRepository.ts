@@ -12,6 +12,10 @@ class SortStatsRepository {
     return this.sortStatsModel.create({ ...data, createdAt: Date.now() });
   }
 
+  public insertMany(data) {
+    return this.sortStatsModel.insertMany(data);
+  }
+
   public list(query = {}, projection = {}, options) {
     const { skip, limit } = options;
     return this.sortStatsModel.find(query, projection).skip(Number(skip)).limit(Number(limit));

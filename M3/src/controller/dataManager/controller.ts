@@ -74,7 +74,7 @@ class DataMangerController {
       const { data: { data } } = await axios.get(M1_UNSORTED_OBJECTS_LIST_API);
       console.log(data);
       const responseData = await axios.post(M2_SORT_ALL_API, { object: data, sortingAlgorithm }); // for sortDuration
-      console.log(responseData.data.data);
+      console.log('sorted', responseData.data.data);
       const dataInserted = await axios.post(M1_SORT_STATS_LIST_API, {data: responseData.data.data }); // insert data
       console.log(dataInserted.data.data);
       SystemResponse.success(res, dataInserted.data.data);

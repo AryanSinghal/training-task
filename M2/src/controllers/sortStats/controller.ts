@@ -43,7 +43,7 @@ class SortStatsController {
         sortObject(object[index].object, sortingAlgorithm, startTime);
         const endTime = new Date().getTime();
         const sortDuration = endTime - startTime;
-        responseObject = [{ objectId: object[index].id, sortingAlgorithm, sortDuration }, ...responseObject];
+        responseObject = [{ objectId: object[index].id, sortingAlgorithm, sortDuration, createdAt: Date.now() }, ...responseObject];
       });
       console.log(responseObject);
       SystemResponse.success(res, responseObject);

@@ -40,7 +40,7 @@ class SortStatsController {
       const options = { skip, limit };
       const objectList = await sortStatsRepository.list(query, projection, options);
       if (!objectList)
-        throw { message: 'Object List is ' + objectList };
+        throw new Error('Unable to fetch data');
       SystemResponse.success(res, objectList);
     }
     catch (err) {
@@ -72,11 +72,9 @@ class SortStatsController {
     try {
       const { data } = req.body;
       console.log(data);
-      data.forEach(async (item) => {
-        const sortDetails = await sortStatsRepository.create(item);
-        console.log('object created inside M1', sortDetails);
-      });
-      SystemResponse.success(res, 'Data successfully inserted');
+      const sortDetails = await sortStatsRepository.insertMany(data);
+      console.log('object created inside M1', sortDetails);
+      SystemResponse.success(res, sortDetails);
     }
     catch (err) {
       SystemResponse.failure(res, err, err.message);

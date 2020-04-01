@@ -3,6 +3,6 @@ import { SortStatsRouter } from './controllers';
 
 const mainRouter: Router = Router();
 
-mainRouter.use('/sort-stats', SortStatsRouter);
+mainRouter.use('/', SortStatsRouter);
 
 export default mainRouter;
