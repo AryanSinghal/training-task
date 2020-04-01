@@ -49,7 +49,7 @@ class SortStatsDialog extends React.Component {
   }
 
   render() {
-    const { open, onClose, objectId } = this.props;
+    const { open, onClose, objectId, classes } = this.props;
     const { id } = this.state;
     let { count, skip, limit, items } = this.state;
     if (id !== objectId) {
@@ -84,7 +84,7 @@ class SortStatsDialog extends React.Component {
             <TableContainer component={Paper} elevation={3}>
               <Table aria-label="simple table">
                 <TableHead>
-                  <TableRow>
+                  <TableRow className={classes.heading}>
                     {
                       SORT_COLUMNS && SORT_COLUMNS.length && SORT_COLUMNS.map((column) => (
                         <Fragment key={column.field}>
@@ -97,7 +97,7 @@ class SortStatsDialog extends React.Component {
                 <TableBody>
                   {
                     items.map((obj) => (
-                      <TableRow key={obj.id}>
+                      <TableRow key={obj.id} hover={true}>
                         {
                           SORT_COLUMNS.map((column) => (
                             <Fragment key={obj.id + column.field + obj[column.field]}>
@@ -123,7 +123,8 @@ class SortStatsDialog extends React.Component {
 SortStatsDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  objectId: PropTypes.string.isRequired
+  objectId: PropTypes.string.isRequired,
+  classes: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default SortStatsDialog;

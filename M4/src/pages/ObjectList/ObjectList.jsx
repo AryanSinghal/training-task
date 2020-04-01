@@ -12,8 +12,12 @@ import SortStatsDialog from './SortStatsDialog';
 
 const styles = () => ({
   buttonHeight: { lineHeight: '2.6' },
-  color: { backgroundColor: 'whitesmoke' },
-  heading: { fontWeight: 'bold' },
+  heading: { fontWeight: 'bold', backgroundColor: '#3f51b5', color: 'white' },
+  table: {
+    '&:hover': { backgroundColor: '#AAAAAA' },
+    '&:nth-child(even)': { backgroundColor: '#F2F2F2' },
+    '&:nth-child(odd)': { backgroundColor: '#FFFFFF' },
+  },
 });
 
 class ObjectList extends React.Component {
@@ -130,8 +134,8 @@ class ObjectList extends React.Component {
           loadMore={this.loadFunc}
           hasMore={!!(Number(skip) + Number(limit) <= Number(count))}
           loader={<div key="loader">Loading ...</div>}>
-          <TableContainer component={Paper} className={classes.color} elevation={3}>
-            <Table aria-label="simple table">
+          <TableContainer component={Paper} elevation={3}>
+            <Table aria-label="simple table" className={classes.table}>
               <TableHead>
                 <TableRow>
                   {
@@ -147,7 +151,7 @@ class ObjectList extends React.Component {
               <TableBody>
                 {
                   items.map((obj, index) => (
-                    <TableRow key={obj.id}>
+                    <TableRow key={obj.id} hover={true}>
                       {
                         OBJECT_COLUMNS.map((column) => (
                           <Fragment key={obj.id + column.field + obj[column.field]}>
@@ -200,6 +204,7 @@ class ObjectList extends React.Component {
                                 open={open}
                                 onClose={this.handleClose}
                                 objectId={objectId}
+                                classes={classes}
                               />
                             </Grid>
                           </Grid>
