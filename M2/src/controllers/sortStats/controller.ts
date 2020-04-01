@@ -52,7 +52,6 @@ class SortStatsController {
       SystemResponse.failure(res, err, err.message);
     }
   };
-
 }
 
 export default SortStatsController.getInstance();

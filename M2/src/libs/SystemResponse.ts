@@ -14,4 +14,5 @@ class SystemResponse {
     });
   }
 }
+
 export default SystemResponse;

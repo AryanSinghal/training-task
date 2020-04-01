@@ -34,7 +34,6 @@ const sortObject = (object: object, sortMethod, startTime): object => {
       }
     }
   }
-
   return sortedObj;
 };
 

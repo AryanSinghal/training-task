@@ -37,7 +37,8 @@ class DataMangerController {
     try {
       const { skip, limit } = req.query;
       console.log({ skip, limit });
-      const { data } = await axios.get(M1_UNSORTED_OBJECTS_API + '?' + querystring.stringify({ skip, limit }));
+      const url = M1_UNSORTED_OBJECTS_API + '?' + querystring.stringify({ skip, limit });
+      const { data } = await axios.get(url);
       console.log(data);
       const sortDuration = await axios.get(M1_SORT_STATS_API);
       console.log(sortDuration.data.data);
@@ -74,8 +75,8 @@ class DataMangerController {
       const { data: { data } } = await axios.get(M1_UNSORTED_OBJECTS_LIST_API);
       console.log(data);
       const responseData = await axios.post(M2_SORT_ALL_API, { object: data, sortingAlgorithm }); // for sortDuration
-      console.log('sorted', responseData.data.data);
-      const dataInserted = await axios.post(M1_SORT_STATS_LIST_API, {data: responseData.data.data }); // insert data
+      console.log(responseData.data.data);
+      const dataInserted = await axios.post(M1_SORT_STATS_LIST_API, { data: responseData.data.data }); // insert data
       console.log(dataInserted.data.data);
       SystemResponse.success(res, dataInserted.data.data);
     }
@@ -87,7 +88,8 @@ class DataMangerController {
   listSortStats = async (req: Request, res: Response) => {
     try {
       const { skip, limit, objectId } = req.query;
-      const { data: { data } } = await axios.get(M1_SORT_STATS_LIST_API + '?' + querystring.stringify({ skip, limit, objectId }));
+      const url = M1_SORT_STATS_LIST_API + '?' + querystring.stringify({ skip, limit, objectId });
+      const { data: { data } } = await axios.get(url);
       console.log(data);
       SystemResponse.success(res, data);
     } catch (err) {
