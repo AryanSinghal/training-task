@@ -12,6 +12,8 @@ import SortStatsDialog from './SortStatsDialog';
 
 const styles = () => ({
   buttonHeight: { lineHeight: '2.6' },
+  color: { backgroundColor: 'whitesmoke' },
+  heading: { fontWeight: 'bold' },
 });
 
 class ObjectList extends React.Component {
@@ -128,18 +130,18 @@ class ObjectList extends React.Component {
           loadMore={this.loadFunc}
           hasMore={!!(Number(skip) + Number(limit) <= Number(count))}
           loader={<div key="loader">Loading ...</div>}>
-          <TableContainer component={Paper} elevation={3}>
+          <TableContainer component={Paper} className={classes.color} elevation={3}>
             <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
                   {
                     OBJECT_COLUMNS && OBJECT_COLUMNS.length && OBJECT_COLUMNS.map((column) => (
                       <Fragment key={column.field}>
-                        <TableCell align="center"> {column.label} </TableCell>
+                        <TableCell align="center" className={classes.heading}> {column.label} </TableCell>
                       </Fragment>
                     ))
                   }
-                  <TableCell align="center">Action</TableCell>
+                  <TableCell align="center" className={classes.heading}>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

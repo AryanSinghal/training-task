@@ -24,7 +24,7 @@ export const OBJECT_COLUMNS = [
   },
   {
     field: 'sortDuration',
-    label: 'sort Duration',
+    label: 'Sort Duration',
   }
 ];
 export const SORT_COLUMNS = [

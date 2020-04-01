@@ -6,7 +6,7 @@ import { M3_SORT_ALL_API } from '../../configs/constant';
 
 
 const styles = () => ({
-  buttonHeight: { lineHeight: '2.6' },
+  button: { lineHeight: '2.6' },
 });
 
 class SortAll extends React.Component {
@@ -67,7 +67,7 @@ class SortAll extends React.Component {
               variant="contained"
               onClick={this.sortAll}
               color="primary"
-              className={classes.buttonHeight}
+              className={classes.button}
               fullWidth
             >
               Sort All
@@ -79,7 +79,7 @@ class SortAll extends React.Component {
             <Button
               variant="contained"
               color="primary"
-              className={classes.buttonHeight}
+              className={classes.button}
               fullWidth
             >
               Sort Unsorted
