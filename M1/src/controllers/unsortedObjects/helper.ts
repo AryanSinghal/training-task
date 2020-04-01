@@ -2,6 +2,10 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+function getRandomIntExceptZero(max) {
+  return 1 + Math.floor(Math.random() * max - 1);
+}
+
 function getRandomNumber(length) {
   let result = '';
   const characters = '0123456789';
@@ -32,13 +36,13 @@ const getObject = (rootKeyCount, maxDepth) => {
   let object = {};
   while (rootKey < rootKeyCount) {
     const max = (maxDepth > 0) ? 5 : 4;
-    const key = getRandomString(20);
+    const key = getRandomString(getRandomIntExceptZero(20));
     switch (getRandomInt(max)) {
       case 0:
-        object = { ...object, [key]: getRandomNumber(getRandomInt(20)) };
+        object = { ...object, [key]: getRandomNumber(getRandomIntExceptZero(20)) };
         break;
       case 1:
-        object = { ...object, [key]: getRandomString(20) };
+        object = { ...object, [key]: getRandomString(getRandomIntExceptZero(20)) };
         break;
       case 2:
         object = { ...object, [key]: getRandomBoolean() };
