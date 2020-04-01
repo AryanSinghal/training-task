@@ -1,6 +1,5 @@
 import React from 'react';
 import { CreateObject, ObjectList, SortAll } from './pages';
-import './App.css';
 
 function App() {
   return (

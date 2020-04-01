@@ -97,7 +97,7 @@ class SortStatsDialog extends React.Component {
                 <TableBody>
                   {
                     items.map((obj) => (
-                      <TableRow key={obj.id} hover={true}>
+                      <TableRow key={obj.id} className={classes.table}>
                         {
                           SORT_COLUMNS.map((column) => (
                             <Fragment key={obj.id + column.field + obj[column.field]}>

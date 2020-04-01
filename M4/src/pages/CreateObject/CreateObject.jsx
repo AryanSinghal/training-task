@@ -32,12 +32,12 @@ class CreateObject extends React.Component {
 
   handleCountChange = (event) => {
     const { value } = event.target;
-    this.setState({ countError: this.getError('Root Key Count', value), count: value, submitted: '' });
+    this.setState({ countError: this.getError('Root Key Count', value), count: value });
   }
 
   handleDepthChange = (event) => {
     const { value } = event.target;
-    this.setState({ depthError: this.getError('Max Depth', value), depth: value, submitted: '' });
+    this.setState({ depthError: this.getError('Max Depth', value), depth: value });
   }
 
   onSubmitHandle = async (event) => {
@@ -66,7 +66,7 @@ class CreateObject extends React.Component {
   }
 
   render() {
-    const { countError, depthError, submitted } = this.state;
+    const { countError, depthError } = this.state;
     console.log(this.state);
 
     return (
